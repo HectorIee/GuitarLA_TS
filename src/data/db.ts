@@ -1,6 +1,6 @@
 import { GuitarT } from "../utils/types";
 
-export const db: GuitarT[]  = [
+export const db: GuitarT[] = [
     {
         id: 'ARG98190',
         image: '/img/guitarra_01.jpg',
