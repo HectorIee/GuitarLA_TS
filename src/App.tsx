@@ -2,12 +2,10 @@ import CardGuitar from "./components/CardGuitar"
 import Header from "./components/Header"
 import { useCart } from "./hooks/useCart";
 
-
 function App() {
 
   const { data, cart, addToCart, removeFromCart, increaseAmount,
     decreaseAmount, clearCart, isEmpty, cartTotal } = useCart()
-
 
   return (
     <>

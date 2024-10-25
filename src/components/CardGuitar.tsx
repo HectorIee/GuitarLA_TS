@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { guitarraPropTypes } from '../utils/propTypes';
+import { guitarraPropTypes } from '../utils/propTypes'
 import { GuitarT } from '../utils/types';
 
 type GuitarProps = {

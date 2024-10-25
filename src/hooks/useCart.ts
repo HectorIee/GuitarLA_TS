@@ -1,12 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { db } from '../data/db'
-import { CartItemT } from "../utils/types";
+import { GuitarT, CartItemT} from "../utils/types";
 
 export const useCart = () => {
 
-    const initialCart = () : CartItemT[] => {
+    const initialCart = () :CartItemT[] =>  {
         const localStorageCart = localStorage.getItem('cart')
         return localStorageCart ? JSON.parse(localStorageCart) : []
+
     }
 
     const [data] = useState(db)
@@ -19,7 +20,7 @@ export const useCart = () => {
         localStorage.setItem('cart', JSON.stringify(cart))
     }, [cart])
 
-    const addToCart = (item) => {
+    const addToCart = (item : GuitarT) => {
         const ExistItem = cart.findIndex(guitar => guitar.id === item.id)
         if (ExistItem >= 0) {  //Does the item exist in the cart
             console.log('ya existe...')
@@ -28,17 +29,17 @@ export const useCart = () => {
             setCart(UpdateCart)
         } else {
             console.log('no existe, agregando...')
-            item.count = 1
-            setCart([...cart, item])
+            const newItem : CartItemT = {...item, count: 1}
+            setCart([...cart, newItem])
         }
     }
 
-    function removeFromCart(id) {
+    function removeFromCart(id : GuitarT['id']) {
         console.log('Eliminando....', id)
         setCart(prevCart => prevCart.filter(guitar => guitar.id !== id))
     }
 
-    function increaseAmount(id) {
+    function increaseAmount(id : GuitarT['id']) {
         console.log('Incremento....', id)
         const updatedCart = cart.map(item => {
             return item.id === id && item.count < MAX_ITEMS ? { ...item, count: item.count + 1 } : item
@@ -46,7 +47,7 @@ export const useCart = () => {
         setCart(updatedCart)
     }
 
-    function decreaseAmount(id) {
+    function decreaseAmount(id : GuitarT['id']) {
         console.log('Decremento....', id)
         const updatedCart = cart.map(item => {
             return item.id === id && item.count > MIN_ITEMS ? { ...item, count: item.count - 1 } : item
@@ -57,6 +58,7 @@ export const useCart = () => {
     function clearCart() {
         setCart([])
     }
+
 
     // derivative state
     const isEmpty = useMemo(() => cart.length === 0, [cart])
